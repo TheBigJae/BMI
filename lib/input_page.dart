@@ -3,8 +3,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'iconcontent.dart';
 import 'reusablecard.dart';
 
-const activeCardColor = Color(0xFF1D1E33);
+const activeCardColor = Color(0xFFEB1555);
 const inActiveCardColor = Color(0xFF111328);
+
+enum Gender { male, female }
 
 class InputPage extends StatefulWidget {
   @override
@@ -12,6 +14,8 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  late Gender selectedGender;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,22 +28,31 @@ class _InputPageState extends State<InputPage> {
                 child: Row(
               children: [
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      print('Male card was pressed');
+                  child: ReusableCard(
+                    onPress: () {
+                      setState(() {
+                        selectedGender = Gender.male;
+                      });
                     },
-                    child: ReusableCard(
-                      colour: inActiveCardColor,
-                      cardChild: contentW(
-                        icon: FontAwesomeIcons.mars,
-                        label: 'MALE',
-                      ),
+                    colour: selectedGender == Gender.male
+                        ? activeCardColor
+                        : inActiveCardColor,
+                    cardChild: contentW(
+                      icon: FontAwesomeIcons.mars,
+                      label: 'MALE',
                     ),
                   ),
                 ),
                 Expanded(
                     child: ReusableCard(
-                        colour: inActiveCardColor,
+                        onPress: () {
+                          setState(() {
+                            selectedGender = Gender.female;
+                          });
+                        },
+                        colour: selectedGender == Gender.female
+                            ? activeCardColor
+                            : inActiveCardColor,
                         cardChild: contentW(
                           icon: FontAwesomeIcons.venus,
                           label: 'FEMALE',
@@ -48,28 +61,34 @@ class _InputPageState extends State<InputPage> {
             )),
             Expanded(
                 child: ReusableCard(
-                    colour: Color(0xFF1D1E33),
-                    cardChild: contentW(
-                      icon: FontAwesomeIcons.mars,
-                      label: 'MALE',
-                    ))),
+              colour: Color(0xFF1D1E33),
+              cardChild: contentW(
+                icon: FontAwesomeIcons.mars,
+                label: 'MALE',
+              ),
+              onPress: () {},
+            )),
             Expanded(
                 child: Row(
               children: [
                 Expanded(
                     child: ReusableCard(
-                        colour: Color(0xFF1D1E33),
-                        cardChild: contentW(
-                          icon: FontAwesomeIcons.mars,
-                          label: 'MALE',
-                        ))),
+                  colour: Color(0xFF1D1E33),
+                  cardChild: contentW(
+                    icon: FontAwesomeIcons.mars,
+                    label: 'MALE',
+                  ),
+                  onPress: () {},
+                )),
                 Expanded(
                     child: ReusableCard(
-                        colour: Color(0xFF1D1E33),
-                        cardChild: contentW(
-                          icon: FontAwesomeIcons.mars,
-                          label: 'MALE',
-                        )))
+                  colour: Color(0xFF1D1E33),
+                  cardChild: contentW(
+                    icon: FontAwesomeIcons.mars,
+                    label: 'MALE',
+                  ),
+                  onPress: () {},
+                ))
               ],
             )),
             Container(
